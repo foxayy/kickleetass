@@ -23,6 +23,10 @@
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
+/*
+ * 此题需求解  (y-x)*min(h[x],h[y]) 的最大值。最容易想到暴力求解，复杂度O(N^2). 进一步思考🤔
+ * 起始 x,y 在左右两端时，底(y-x)此时最大。要想保证乘积变得更大，那么再往中间移动的过程中应该使得高更大，所以移动的时候移动最小的那条边。
+ * */
 class Solution {
 public:
     int maxArea(vector<int>& h) {
