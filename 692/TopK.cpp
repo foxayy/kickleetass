@@ -1,6 +1,9 @@
 #include <map>
 #include <vector>
 #include <iostream>
+#include <algorithm>
+#include <unordered_map>
+#include <queue>
 using namespace std;
 
 class Solution {
@@ -43,83 +46,42 @@ public:
         return res;
     }
 
-    //思路:动态维护topK，遍历完所有数据TopK记录就是结果
-    // 1.遍历数据，并记录出现次数
-    // 2.若当前数据出现在topK记录中更新topK记录；
-    //  若未出现
-    //      若topK记录未满，添加新记录
-    //      若topK记录已满，与最小值比较
-    //          若大于最小值，去掉最小值，添加新记录
-    //          若小于最小值，不做任何改变
-    // 3.topK排序输出
-    // 时间复杂度 O（n*k）+ O（k log k）
-    // 空间复杂度 O（n）+ Q（k）* 2
-    vector<string> topKFrequent1(vector<string>& words, int k) {
-        map<string,int> dicts;
-        map<string,int> topK;
-        for(int i=words.size()-1;i>=0;--i){
-            dicts[words[i]]+=1;
-            if(topK.find(words[i])!=topK.end()){
-                topK[words[i]]+=1;
+    struct cmp
+    {
+        bool operator()(pair<int,string>& p1,pair<int,string>& p2){
+            if(p1.first!=p2.first){
+                return p1.first<p2.first;
             }else{
-                if(topK.size()<k){
-                    topK[words[i]]=dicts[words[i]];
-                }else{
-                    string minKey;
-                    for(auto it=topK.begin();it!=topK.end();it++){
-                        if(minKey.empty()){
-                            minKey = it->first;
-                            continue;
-                        }
-                        if(topK[it->first]>topK[minKey])
-                            continue;
-                        if(topK[it->first]<topK[minKey]){
-                            minKey = it->first;
-                            continue;
-                        }
-                        if(it->first>minKey){
-                            minKey = it->first;
-                        }
-                    }
-                    if(topK[minKey]>dicts[words[i]]){
-                        continue;
-                    }
-                    if(topK[minKey]<dicts[words[i]]){
-                        topK.erase(minKey);
-                        topK[words[i]]=dicts[words[i]];
-                        continue;
-                    }
-                    if(minKey>words[i]){
-                        topK.erase(minKey);
-                        topK[words[i]]=dicts[words[i]];
-                        continue;
-                    }
-                }
+                return p1.second>p2.second;
             }
         }
-        vector<KV> data;
-        for(auto it=topK.begin();it!=topK.end();it++){
-            KV kv;
-            kv.key=it->first;
-            kv.value=it->second;
-            data.push_back(kv);
+    };
+
+    //思路：优先队列+哈希表
+    //  优先队列的底层实现是一个堆
+    //  unordered_map底层实现为哈希表，map是红黑树
+    //时间复杂度：Q(NlogN)
+    //空间复杂度：Q(N)
+    vector<string> topKFrequent2(vector<string>& words, int k) {
+        
+        unordered_map<string,int> dicts;
+        for(auto it:words){
+            dicts[it]+=1;
         }
-        sort(data.begin(),data.end(),[](const KV& d1,const KV& d2){
-            if(d1.value>d2.value)
-                return true;
-            if(d1.value < d2.value)
-                return false;
-            if(d1.key<d2.key)
-                return true;
-            return false;
-        });
+
+        priority_queue<pair<int,string>,vector<pair<int,string>>,cmp> topK;
+        for(auto it:dicts){
+            topK.push(pair<int,string>(it.second,it.first));
+        }
+
         vector<string> res;
-        for(int i=0;i<k && i<data.size();i++){
-            res.push_back(data[i].key);
+        while (k--)
+        {
+            res.push_back(topK.top().second);
+            topK.pop();
         }
         return res;
     }
-    //todo:优化代码及算法
 
 };
 int main(int argc, char *argv[])
@@ -128,7 +90,7 @@ int main(int argc, char *argv[])
     int k=2;
 
     Solution s;
-    auto res = s.topKFrequent1(data,k);
+    auto res = s.topKFrequent2(data,k);
 
     for(auto it = res.begin();it!=res.end();it++){
         cout<<*it<<" ";
