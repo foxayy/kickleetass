@@ -8,3 +8,6 @@ include_directories(.)
 add_executable(
         MinimumPathSum Array/64/solution.cpp
 )
+add_executable(
+        UniquePaths Array/62/solution.cpp
+)
