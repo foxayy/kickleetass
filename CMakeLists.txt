@@ -14,3 +14,7 @@ add_executable(
 add_executable(
         CombinationSumII Array/40/solution.cpp
 )
+
+add_executable(
+        MergeIntervals Array/56/solution.cpp
+)
