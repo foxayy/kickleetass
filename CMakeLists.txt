@@ -18,3 +18,7 @@ add_executable(
 add_executable(
         MergeIntervals Array/56/solution.cpp
 )
+
+add_executable(
+        UniquePathsII Array/63/solution.cpp
+)
