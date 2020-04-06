@@ -11,3 +11,6 @@ add_executable(
 add_executable(
         UniquePaths Array/62/solution.cpp
 )
+add_executable(
+        CombinationSumII Array/40/solution.cpp
+)
