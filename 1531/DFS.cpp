@@ -23,8 +23,8 @@ using namespace std;
 // 链接：https://leetcode-cn.com/problems/ji-qi-ren-de-yun-dong-fan-wei-lcof
 // 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
-//基础图论算法 BFS+递归实现
-// res = BFS(x,y) = BFS(x-1,y) + BFS(x+1,y) + BFS(x,y-1) + BFS(x,y+1);//上下左右
+//基础图论算法 DFS+递归实现
+// res = DFS(x,y) = DFS(x-1,y) + DFS(x+1,y) + DFS(x,y-1) + DFS(x,y+1);//上下左右
 class Solution {
 
     int m_K;
@@ -51,14 +51,14 @@ public:
         return x>=0 && x<m_m && y>=0 && y<m_n;
     }
 
-    int bfs(int x,int y){
+    int DFS(int x,int y){
 
         if(!canInto(x,y) || !lessThanK(x,y) || F[x][y])
             return 0;
 
         F[x][y]=1;
         
-        return bfs(x-1,y) + bfs(x,y-1) + bfs(x+1,y) + bfs(x,y+1)+1;
+        return DFS(x-1,y) + DFS(x,y-1) + DFS(x+1,y) + DFS(x,y+1)+1;
     }
     int movingCount(int m, int n, int k) {
 
@@ -72,7 +72,7 @@ public:
             memset(F[i],0,sizeof(bool)*n);
         }
 
-        int res = bfs(0,0);
+        int res = DFS(0,0);
 
         for(int i=0;i<m;i++){
             delete[] F[i];
