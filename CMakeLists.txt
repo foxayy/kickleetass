@@ -22,3 +22,7 @@ add_executable(
 add_executable(
         UniquePathsII Array/63/solution.cpp
 )
+
+add_executable(
+        JumpGame Array/55/solution.cpp
+)
