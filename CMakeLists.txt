@@ -26,3 +26,7 @@ add_executable(
 add_executable(
         JumpGame Array/55/solution.cpp
 )
+
+add_executable(
+        SearchInRotatedSortedArray Array/33/SearchInRotatedSortedArray.cpp
+)
