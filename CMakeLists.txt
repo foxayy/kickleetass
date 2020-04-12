@@ -30,3 +30,7 @@ add_executable(
 add_executable(
         SearchInRotatedSortedArray Array/33/SearchInRotatedSortedArray.cpp
 )
+
+add_executable(
+        FindFirstAndLastPositionOfElementInSortedArray Array/34/FindFirstAndLastPositionOfElementInSortedArray.cpp
+)
