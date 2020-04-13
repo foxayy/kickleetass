@@ -34,3 +34,7 @@ add_executable(
 add_executable(
         FindFirstAndLastPositionOfElementInSortedArray Array/34/FindFirstAndLastPositionOfElementInSortedArray.cpp
 )
+
+add_executable(
+        ReverseString Learn/RecursionI/PrincipleOfRecursion/ReverseString.cpp
+)
